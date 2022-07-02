@@ -6,6 +6,7 @@ import {User} from "./users.model";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
+import {AddRoleDto} from "./dto/add-role.dto";
 
 @ApiTags('Доступные запросы для Пользователей')
 @Controller('users')
@@ -30,5 +31,15 @@ export class UsersController {
         return this.usersService.getAllUsers();
     }
 
+
+    @ApiOperation({summary: 'Выдать роль'})
+    @ApiResponse({status: 200})
+    //  @UseGuards(JwtAuthGuard)  Ограничение доступа к эндпоинту с помощью Guard
+    @Roles('AUTHOR')         // Ограничение к эндпоинту, если нет определенноё роли
+    @UseGuards(RolesGuard)
+    @Post('/role')
+    addRole(@Body() dto: AddRoleDto){
+        return this.usersService.addRole(dto);
+    }
 
 }
