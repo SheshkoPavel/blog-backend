@@ -21,7 +21,7 @@ import * as path from 'path'
             envFilePath: `.${process.env.NODE_ENV}.env`  //Отслеживание режима пользователь/разработчик
         }),
         ServeStaticModule.forRoot({
-            rootPath: path.resolve(__dirname, 'static'),
+            rootPath: path.resolve(__dirname, 'static' ),
         }),
         SequelizeModule.forRoot({   //Найстройка Type ORM Sequelize
             dialect: 'postgres',

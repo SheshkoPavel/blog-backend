@@ -5,4 +5,6 @@ export class CreateUserDto {
     readonly email: string;
     @ApiProperty({example: '1234567', description: 'Пароль пользователя'})
     readonly password: string;
+    @ApiProperty({example: 'myAvatar.jpg', description: 'Аватар пользователя'})
+    readonly avatar: string;
 }

@@ -15,4 +15,9 @@ export class PostsService {
         const post = await this.postRepository.create({...dto, image: fileName})  //Здесь нужно название,а не сам файл
         return post;
     }
+
+    async getAllPosts() {
+        const posts = await this.postRepository.findAll({include: {all: true}});
+        return posts;
+    }
 }

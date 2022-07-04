@@ -1,8 +1,9 @@
-import {Body, Controller, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Get, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {CreatePostDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
-import {ApiTags} from "@nestjs/swagger";
+import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {FileInterceptor} from "@nestjs/platform-express";
+
 
 @ApiTags('Доступные запросы для Статей блога')
 @Controller('posts')
@@ -14,6 +15,13 @@ export class PostsController {
     @UseInterceptors(FileInterceptor('image'))
     createPost(@Body() dto: CreatePostDto, @UploadedFile() image){
         return this.postService.create(dto, image);
+    }
+
+    @ApiOperation({summary: 'Получение всех постов из БД'})
+    @ApiResponse({status: 200, type: [Post]})
+    @Get()
+    getAll(){
+        return this.postService.getAllPosts();
     }
 
 }
