@@ -26,6 +26,10 @@ export class Post extends Model<Post, PostCreationAttributes> {
     @Column({type: DataType.STRING, allowNull: false})
     content: string;
 
+    @ApiProperty({example: 'PUBLISHED', description: 'Текущий статус статьи'})
+    @Column({type: DataType.STRING, allowNull: false, defaultValue: 'SAVED'})
+    status: string;
+
     @ApiProperty({example: '', description: 'Изображение к Статье'})
     @Column({type: DataType.STRING, allowNull: false})
     image: string;
