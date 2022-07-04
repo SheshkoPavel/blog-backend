@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Patch, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Patch, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {CreatePostDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -25,8 +25,8 @@ export class PostsController {
         return this.postService.getAllPosts();
     }
 
-    @ApiOperation({summary: 'Изменение новости по id', description: 'В ответе вы получите responseCode и сообщение'})
-    @ApiResponse({status: 200, })
+    @ApiOperation({summary: 'Изменение статьи по id', description: 'В ответе вы получите responseCode и сообщение'})
+    @ApiResponse({status: HttpStatus.OK, type: UpdatePostResponseDto})
     @Patch()
     async updatePost(@Body() updatePostDto: UpdatePostDto): Promise<UpdatePostResponseDto>{
         const [updateResponseCode] = await this.postService.updatePost(updatePostDto);
