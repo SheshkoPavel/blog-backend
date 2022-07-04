@@ -7,6 +7,7 @@ import {Post} from "../posts/posts.model";
 interface UserCreationAttributes {
     email: string;
     password: string;
+    avatar: string;
 }
 
 @Table({tableName: 'users'})
@@ -26,6 +27,10 @@ export class User extends Model<User, UserCreationAttributes> {
     @ApiProperty({example: 'Иванов Игорь Петрович', description: 'ФИО пользователя', default: 'Unknown fox' })
     @Column({type: DataType.STRING, allowNull: true, defaultValue: 'Unknown fox'})
     name: string;
+
+    @ApiProperty({example: 'myAva.jpg', description: 'Аватар пользователя'})
+    @Column({type: DataType.STRING, allowNull: true})
+    avatar: string;
 
     @BelongsToMany(() => Role, () => UserRoles)
     roles: Role[];

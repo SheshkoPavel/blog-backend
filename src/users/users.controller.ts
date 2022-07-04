@@ -14,12 +14,12 @@ export class UsersController {
 
     constructor(private usersService: UsersService) {  }
 
-    @ApiOperation({summary: 'Добавление пользователя'})
+/*    @ApiOperation({summary: 'Добавление пользователя'})
     @ApiResponse({status: 201, type: User})
     @Post()
     create(@Body() userDto: CreateUserDto) {
         return this.usersService.createUser(userDto);
-    }
+    }*/
 
     @ApiOperation({summary: 'Получение всех пользователей из БД'})
     @ApiResponse({status: 200, type: [User]})
@@ -35,8 +35,8 @@ export class UsersController {
     @ApiOperation({summary: 'Выдать роль'})
     @ApiResponse({status: 200})
     //  @UseGuards(JwtAuthGuard)  Ограничение доступа к эндпоинту с помощью Guard
-    @Roles('AUTHOR')         // Ограничение к эндпоинту, если нет определенноё роли
-    @UseGuards(RolesGuard)
+//    @Roles('AUTHOR')         // Ограничение к эндпоинту, если нет определенноё роли
+//    @UseGuards(RolesGuard)
     @Post('/role')
     addRole(@Body() dto: AddRoleDto){
         return this.usersService.addRole(dto);
