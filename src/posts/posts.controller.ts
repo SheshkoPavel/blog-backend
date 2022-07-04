@@ -13,7 +13,7 @@ export class PostsController {
 
     constructor(private postService: PostsService) {}
 
-    @UseGuards(JwtAuthGuard) // Ограничение доступа к эндпоинту с помощью Guard
+//    @UseGuards(JwtAuthGuard) // Ограничение доступа к эндпоинту с помощью Guard
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     createPost(@Body() dto: CreatePostDto, @UploadedFile() image){
@@ -29,7 +29,7 @@ export class PostsController {
 
     @ApiOperation({summary: 'Изменение статьи по id', description: 'В ответе вы получите responseCode и сообщение'})
     @ApiResponse({status: HttpStatus.OK, type: UpdatePostResponseDto})
-    @UseGuards(JwtAuthGuard)
+//    @UseGuards(JwtAuthGuard)
     @Patch()
     async updatePost(@Body() updatePostDto: UpdatePostDto): Promise<UpdatePostResponseDto>{
         const [updateResponseCode] = await this.postService.updatePost(updatePostDto);

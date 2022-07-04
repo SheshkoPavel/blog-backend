@@ -13,6 +13,7 @@ import { FilesModule } from './files/files.module';
 import {ServeStaticModule} from "@nestjs/serve-static";
 import { CommentsModule } from './comments/comments.module';
 import * as path from 'path'
+import {Comment} from "./comments/comments.model";
 
 @Module({
     controllers: [],
@@ -31,7 +32,7 @@ import * as path from 'path'
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Post],
+            models: [User, Role, UserRoles, Post, Comment],
             autoLoadModels: true
         }),
         UsersModule,

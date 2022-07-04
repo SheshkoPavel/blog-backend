@@ -6,13 +6,13 @@ import {User} from "../users/users.model";
 import {Post} from "./posts.model";
 import {FilesModule} from "../files/files.module";
 import {AuthModule} from "../auth/auth.module";
-import {JwtModule} from "@nestjs/jwt";
+import {Comment} from "../comments/comments.model";
 
 @Module({
   controllers: [PostsController],
   providers: [PostsService],
   imports: [
-    SequelizeModule.forFeature([User, Post]),
+    SequelizeModule.forFeature([User, Post, Comment]),
     FilesModule,
     forwardRef(() => AuthModule)
   ]
