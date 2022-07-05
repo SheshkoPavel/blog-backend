@@ -14,6 +14,7 @@ import {ServeStaticModule} from "@nestjs/serve-static";
 import { CommentsModule } from './comments/comments.module';
 import * as path from 'path'
 import {Comment} from "./comments/comments.model";
+import { TagsModule } from './tags/tags.module';
 
 @Module({
     controllers: [],
@@ -41,6 +42,7 @@ import {Comment} from "./comments/comments.model";
         PostsModule,
         FilesModule,
         CommentsModule,
+        TagsModule,
     ]
 })
 export class AppModule {}
