@@ -7,7 +7,7 @@ interface TagCreationAttributes {
     tag: string;
 }
 
-@Table({tableName: 'roles'})
+@Table({tableName: 'tags'})
 export class Tag extends Model<Tag, TagCreationAttributes> {
     @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})

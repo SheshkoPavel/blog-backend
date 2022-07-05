@@ -5,6 +5,8 @@ import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {UpdatePostDto, UpdatePostResponseDto} from "./dto/update-post.dto";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import {AddRoleDto} from "../users/dto/add-role.dto";
+import {AddTagDto} from "../roles/dto/add-tag.dto";
 
 
 @ApiTags('Доступные запросы для Статей блога')
@@ -50,6 +52,13 @@ export class PostsController {
             responseCode: updateResponseCode,
             message: `Пост с ID ${updatePostDto.updateId} был изменён`
         }
+    }
+
+    @ApiOperation({summary: 'Выдать тег'})
+    @ApiResponse({status: 200})
+    @Post('/tag')
+    addTag(@Body() dto: AddTagDto){
+        return this.postService.addTag(dto);
     }
 
 }
