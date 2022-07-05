@@ -1,9 +1,9 @@
 import {BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {Role} from "../roles/roles.model";
-import {UserRoles} from "../roles/user-roles.model";
 import {User} from "../users/users.model";
 import {Comment} from "../comments/comments.model";
+import {Tag} from "../tags/tags.model";
+import {PostTags} from "../tags/post-tag.model";
 
 interface PostCreationAttributes {
     title: string;
@@ -44,4 +44,7 @@ export class Post extends Model<Post, PostCreationAttributes> {
 
     @HasMany(()=> Comment)
     comments: Comment[];
+
+    @BelongsToMany(() => Tag, () => PostTags)
+    tags: Tag[];
 }

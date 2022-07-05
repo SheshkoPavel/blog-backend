@@ -1,7 +1,7 @@
 import {BelongsToMany, Column, DataType, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
-import {UserRoles} from "../roles/user-roles.model";
 import {Post} from "../posts/posts.model";
+import {PostTags} from "./post-tag.model";
 
 interface TagCreationAttributes {
     tag: string;
@@ -17,6 +17,6 @@ export class Tag extends Model<Tag, TagCreationAttributes> {
     @Column({type: DataType.STRING, unique: true, allowNull: false})
     tag: string;
 
-    @BelongsToMany(() => Post, () => UserRoles)
+    @BelongsToMany(() => Post, () => PostTags)
     posts: Post[];
 }

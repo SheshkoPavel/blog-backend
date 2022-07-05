@@ -23,6 +23,4 @@ import {FilesModule} from "../files/files.module";
         UsersService
     ]
 })
-export class UsersModule {
-
-}
+export class UsersModule {}
