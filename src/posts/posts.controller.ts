@@ -20,11 +20,18 @@ export class PostsController {
         return this.postService.create(dto, image);
     }
 
-    @ApiOperation({summary: 'Получение всех постов из БД'})
+    @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
     @ApiResponse({status: 200, type: [Post]})
-    @Get()
+    @Get('all')
     getAll(){
         return this.postService.getAllPosts();
+    }
+
+    @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
+    @ApiResponse({status: 200, type: [Post]})
+    @Get()
+    getAllPublished(){
+        return this.postService.getAllPublishedPosts();
     }
 
     @ApiOperation({summary: 'Изменение статьи по id', description: 'В ответе вы получите responseCode и сообщение'})

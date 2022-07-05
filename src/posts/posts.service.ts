@@ -18,6 +18,11 @@ export class PostsService {
     }
 
     async getAllPosts() {
+        const posts = await this.postRepository.findAll({include: {all: true}});
+        return posts;
+    }
+
+    async getAllPublishedPosts() {
         const posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'}, include: {all: true}});
         return posts;
     }
