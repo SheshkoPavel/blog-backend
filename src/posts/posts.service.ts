@@ -23,7 +23,8 @@ export class PostsService {
 
     async getAllPosts() {
         const posts = await this.postRepository.findAll({include: {all: true}});
-        return posts;
+        let totalCount = await this.postRepository.count({col: 'id'});
+        return {posts, totalCount};
     }
 
     async getAllPublishedPosts() {

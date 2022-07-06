@@ -7,6 +7,7 @@ import {UpdatePostDto, UpdatePostResponseDto} from "./dto/update-post.dto";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {AddRoleDto} from "../users/dto/add-role.dto";
 import {AddTagDto} from "../roles/dto/add-tag.dto";
+import {PostsGetAllResponse} from "./responses/posts.getAll-response";
 
 
 @ApiTags('Доступные запросы для Статей блога')
@@ -23,7 +24,7 @@ export class PostsController {
     }
 
     @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
-    @ApiResponse({status: 200, type: [Post]})
+    @ApiResponse({status: 200, type: PostsGetAllResponse})
     @Get('all')
     getAll(){
         return this.postService.getAllPosts();
