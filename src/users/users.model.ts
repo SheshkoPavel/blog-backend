@@ -25,7 +25,7 @@ export class User extends Model<User, UserCreationAttributes> {
     password: string;
 
     @ApiProperty({example: 'Иванов Игорь Петрович', description: 'ФИО пользователя', default: 'Unknown fox' })
-    @Column({type: DataType.STRING, allowNull: true, defaultValue: 'Unknown fox'})
+    @Column({type: DataType.STRING, allowNull: false, defaultValue: 'Unknown fox'})
     name: string;
 
     @ApiProperty({example: 'myAva.jpg', description: 'Аватар пользователя'})

@@ -12,4 +12,14 @@ export class CommentsService {
         const comment = this.commentRepository.create(dto);
         return comment;
     }
+
+    async getCommentsById(postId: number) {
+        const post = await this.commentRepository.findAll({
+            where: {
+                postId: postId
+            }
+        });
+        return post;
+    }
+
 }

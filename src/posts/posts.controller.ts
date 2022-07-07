@@ -1,4 +1,15 @@
-import {Body, Controller, Get, HttpStatus, Patch, Post, UploadedFile, UseGuards, UseInterceptors} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpStatus,
+    Param,
+    Patch,
+    Post,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import {CreatePostDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -35,6 +46,13 @@ export class PostsController {
     @Get()
     getAllPublished(){
         return this.postService.getAllPublishedPosts();
+    }
+
+    @ApiOperation({summary: 'Получение Одной статьи из БД'})
+    @ApiResponse({status: 200, type: Post})
+    @Get('/:id')
+    getOnePostById(@Param('id') id: number ){
+        return this.postService.getPostById(id);
     }
 
     @ApiOperation({summary: 'Изменение статьи по id', description: 'В ответе вы получите responseCode и сообщение'})

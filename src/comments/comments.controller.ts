@@ -1,4 +1,4 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {CommentsService} from "./comments.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateCommentDto} from "./dto/create-comment.dto";
@@ -17,5 +17,11 @@ export class CommentsController {
         return this.commentService.createComment(dto);
     }
 
+    @ApiOperation({summary: 'Получение всех комментариев к одной статье из БД'})
+    @ApiResponse({status: 200, type: [Comment]})
+    @Get('/:postId')
+    getOnePostById(@Param('postId') postId: number ){
+        return this.commentService.getCommentsById(postId);
+    }
 
 }

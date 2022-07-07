@@ -49,4 +49,15 @@ export class PostsService {
         }
         throw new HttpException('Пост, или тег не найдены', HttpStatus.NOT_FOUND);
     }
+
+    async getPostById(id: number) {
+        const post = await this.postRepository.findOne({
+                where: {
+                    id: id
+                },
+                include: {all: true}
+
+            });
+        return post;
+    }
 }
