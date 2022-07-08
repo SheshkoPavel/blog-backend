@@ -3,6 +3,7 @@ import {ApiTags} from "@nestjs/swagger";
 import {CreateUserDto} from "../users/dto/create-user.dto";
 import {AuthService} from "./auth.service";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {LoginUserDto} from "./dto/login-user.dto";
 
 
 @ApiTags('Авторизация пользователя')
@@ -12,7 +13,7 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post('/login')
-    login(@Body() userDto: CreateUserDto) {
+    login(@Body() userDto: LoginUserDto) {
         return this.authService.login(userDto);
     }
 

@@ -5,6 +5,7 @@ import {JwtService} from "@nestjs/jwt";
 import * as bcrypt from 'bcryptjs'
 import {User} from "../users/users.model";
 import {FilesService} from "../files/files.service";
+import {LoginUserDto} from "./dto/login-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
                 private jwtService: JwtService,
                 private fileService: FilesService) {}
 
-    async login(userDto: CreateUserDto) {
+    async login(userDto: LoginUserDto) {
         const user = await this.validateUser(userDto);
         return this.generateToken(user);
     }
@@ -36,7 +37,7 @@ export class AuthService {
         }
     }
 
-    private async validateUser(userDto: CreateUserDto) {
+    private async validateUser(userDto: LoginUserDto) {
         const user = await this.usersService.getUserByEmail(userDto.email);
         const passwordEquales = await bcrypt.compare(userDto.password, user.password);
         if (!!user && !!passwordEquales) {

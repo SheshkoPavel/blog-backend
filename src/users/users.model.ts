@@ -29,7 +29,7 @@ export class User extends Model<User, UserCreationAttributes> {
     name: string;
 
     @ApiProperty({example: 'myAva.jpg', description: 'Аватар пользователя'})
-    @Column({type: DataType.STRING, allowNull: true})
+    @Column({type: DataType.STRING, allowNull: false})
     avatar: string;
 
     @BelongsToMany(() => Role, () => UserRoles)
