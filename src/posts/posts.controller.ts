@@ -34,7 +34,7 @@ export class PostsController {
         return this.postService.create(dto, image);
     }
 
-    @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
+    @ApiOperation({summary: 'Получение всех постов из БД'})
     @ApiResponse({status: 200, type: PostsGetAllResponse})
     @Get('all')
     getAll(){
@@ -46,6 +46,13 @@ export class PostsController {
     @Get()
     getAllPublished(){
         return this.postService.getAllPublishedPosts();
+    }
+
+    @ApiOperation({summary: 'Получение всех постов одного пользователя'})
+    @ApiResponse({status: 200, type: [Post]})
+    @Get('/user/:userId')
+    getAllUserPosts(@Param ('userId') userId: number ){
+        return this.postService.getAllPostsByUserId(userId);
     }
 
     @ApiOperation({summary: 'Получение Одной статьи из БД'})

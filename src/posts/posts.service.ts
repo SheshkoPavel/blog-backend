@@ -28,7 +28,8 @@ export class PostsService {
     }
 
     async getAllPublishedPosts() {
-        const posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'}, include: {all: true}});
+        const posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
+            include: {all: true}, order: [["updatedAt", "DESC"]]});
         return posts;
     }
 
@@ -59,5 +60,20 @@ export class PostsService {
 
             });
         return post;
+    }
+
+    async getAllPostsByUserId(userId: number) {
+        const { Op } = require("sequelize");
+        const posts = await this.postRepository.findAll({
+            where: {
+                userId: userId,
+                [Op.or]: [
+                    { status: 'PUBLISHED' },
+                    { status: 'SAVED' }
+                ]
+            },
+            include: {all: true}
+        });
+        return posts;
     }
 }
