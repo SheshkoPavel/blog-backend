@@ -62,7 +62,8 @@ export class PostsController {
         return this.postService.getPostById(id);
     }
 
-    @ApiOperation({summary: 'Изменение статьи по id', description: 'В ответе вы получите responseCode и сообщение'})
+    @ApiOperation({summary: 'Изменение статьи по id',
+        description: 'В ответе вы получите responseCode и сообщение'})
     @ApiResponse({status: HttpStatus.OK, type: UpdatePostResponseDto})
 //    @UseGuards(JwtAuthGuard)
     @Patch()
