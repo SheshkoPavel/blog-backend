@@ -19,6 +19,8 @@ import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {AddRoleDto} from "../users/dto/add-role.dto";
 import {AddTagDto} from "../roles/dto/add-tag.dto";
 import {PostsGetAllResponse} from "./responses/posts.getAll-response";
+import {Roles} from "../auth/roles-auth.decorator";
+import {RolesGuard} from "../auth/roles.guard";
 
 
 @ApiTags('Доступные запросы для Статей блога')
@@ -27,7 +29,8 @@ export class PostsController {
 
     constructor(private postService: PostsService) {}
 
-//    @UseGuards(JwtAuthGuard) // Ограничение доступа к эндпоинту с помощью Guard
+    @UseGuards(RolesGuard)
+    @Roles("AUTHOR")         // Ограничение к эндпоинту, если нет определенноё роли
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     createPost(@Body() dto: CreatePostDto, @UploadedFile() image){
@@ -65,7 +68,8 @@ export class PostsController {
     @ApiOperation({summary: 'Изменение статьи по id',
         description: 'В ответе вы получите responseCode и сообщение'})
     @ApiResponse({status: HttpStatus.OK, type: UpdatePostResponseDto})
-//    @UseGuards(JwtAuthGuard)
+    @UseGuards(RolesGuard)
+    @Roles("AUTHOR")
     @Patch()
     async updatePost(@Body() updatePostDto: UpdatePostDto): Promise<UpdatePostResponseDto>{
         const [updateResponseCode] = await this.postService.updatePost(updatePostDto);
