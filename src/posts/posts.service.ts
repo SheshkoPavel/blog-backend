@@ -6,6 +6,7 @@ import {FilesService} from "../files/files.service";
 import {UpdatePostDto} from "./dto/update-post.dto";
 import {AddTagDto} from "../roles/dto/add-tag.dto";
 import {TagsService} from "../tags/tags.service";
+import sequelize from "sequelize";
 
 
 @Injectable()
@@ -29,7 +30,7 @@ export class PostsService {
 
     async getAllPublishedPosts() {
         const posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
-            include: {all: true}, order: [["updatedAt", "DESC"]]});
+            include: {all: true}, order: [["createdAt", "DESC"]]});
         return posts;
     }
 
@@ -75,5 +76,21 @@ export class PostsService {
             include: {all: true}
         });
         return posts;
+    }
+
+    async getStatsForPosts() {
+        const allPublishedCount = await this.postRepository.count({
+            col: 'id',
+            where: {status: "PUBLISHED"}
+        });
+        const allSavedCount = await this.postRepository.count({
+            col: 'id',
+            where: {status: "SAVED"}
+        });
+        return {
+            publishedPostsCount: allPublishedCount,
+            savedPostsCount: allSavedCount
+        }
+
     }
 }

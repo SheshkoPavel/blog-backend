@@ -3,6 +3,7 @@ import {CommentsService} from "./comments.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateCommentDto} from "./dto/create-comment.dto";
 import {Comment} from "./comments.model";
+import {GetCommentsStatsResponseDto} from "./dto/get-comments-stats";
 
 @ApiTags('Доступные запросы для комментариев')
 @Controller('comments')
@@ -15,6 +16,13 @@ export class CommentsController {
     @Post()
     create(@Body() dto: CreateCommentDto) {
         return this.commentService.createComment(dto);
+    }
+
+    @ApiOperation({summary: 'Получение статистики о комментариях'})
+    @ApiResponse({status: 200, type: GetCommentsStatsResponseDto})
+    @Get('/stats')
+    gelCommentsStats() {
+        return this.commentService.getCommentsStatistic();
     }
 
     @ApiOperation({summary: 'Получение всех комментариев к одной статье из БД'})

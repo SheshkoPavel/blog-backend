@@ -21,6 +21,7 @@ import {AddTagDto} from "../roles/dto/add-tag.dto";
 import {PostsGetAllResponse} from "./responses/posts.getAll-response";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
+import {GetPostsStatsResponseDto} from "./dto/get-posts-stats";
 
 
 @ApiTags('Доступные запросы для Статей блога')
@@ -42,6 +43,13 @@ export class PostsController {
     @Get('all')
     getAll(){
         return this.postService.getAllPosts();
+    }
+
+    @ApiOperation({summary: 'Получение статистики о постах'})
+    @ApiResponse({status: 200, type: GetPostsStatsResponseDto})
+    @Get('/stats' )
+    async getPostsStats(){
+        return  await this.postService.getStatsForPosts()
     }
 
     @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})

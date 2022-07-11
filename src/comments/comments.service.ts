@@ -22,4 +22,22 @@ export class CommentsService {
         return post;
     }
 
+
+    async getCommentsStatistic() {
+        const { Op } = require("sequelize");
+        const now = new Date();
+        const dayAgo = new Date(Date.now() - 86400000)
+        const dailyCommentsCount = await this.commentRepository.count({
+            col: 'id',
+            where: {
+                createdAt: {
+                    [Op.lt]: now,
+                    [Op.gt]: dayAgo
+                }
+            }
+        });
+        return {
+            dailyCommentsCount: dailyCommentsCount
+        }
+    }
 }
