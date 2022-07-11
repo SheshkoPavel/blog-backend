@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {Tag} from "./tags.model";
 import {CreateTagDto} from "./dto/create-tag.dto";
@@ -11,8 +11,13 @@ export class TagsService {
 
 
     async createTag(dto: CreateTagDto) {
-        const tag = await this.tagsRepository.create(dto);
-        return tag;
+        const tag = await this.getTagByValue(dto.tag);
+        if (!tag) {
+            const newTag = await this.tagsRepository.create(dto);
+            return newTag;
+        }
+        throw new HttpException('Тег уже существует', HttpStatus.CONFLICT)
+
     }
 
     async getAllTags() {

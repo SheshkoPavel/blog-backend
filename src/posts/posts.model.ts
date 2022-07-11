@@ -24,7 +24,7 @@ export class Post extends Model<Post, PostCreationAttributes> {
 
     @ApiProperty({example: 'В XXI веке человечество столкнулось с проблемой загрязнения планеты',
         description: 'Текст Статьи'})
-    @Column({type: DataType.STRING, allowNull: false})
+    @Column({type: DataType.TEXT, allowNull: false})
     content: string;
 
     @ApiProperty({example: 'PUBLISHED', description: 'Текущий статус статьи'})
