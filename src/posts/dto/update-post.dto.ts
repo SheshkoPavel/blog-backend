@@ -17,3 +17,13 @@ export class UpdatePostResponseDto {
     @ApiProperty({example: 'Пост с ID 28 был изменён', description: 'Сообщение о изменении' })
     readonly message: string;
 }
+
+export class AddTagToPostDto {
+    @ApiProperty({example: 'ЗЕМЛЯ', description: 'Добавленный тег' })
+    readonly tag: string;
+    @ApiProperty({example: '1', description: 'id Статьи, которой был добавлен новый тег' })
+    readonly postId: number;
+}
+
+
+

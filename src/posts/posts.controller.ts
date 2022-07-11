@@ -10,11 +10,11 @@ import {
     UseGuards,
     UseInterceptors
 } from '@nestjs/common';
-import {CreatePostDto} from "./dto/create-post.dto";
+import {CreatePostDto, CreatePostResponseDto} from "./dto/create-post.dto";
 import {PostsService} from "./posts.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {FileInterceptor} from "@nestjs/platform-express";
-import {UpdatePostDto, UpdatePostResponseDto} from "./dto/update-post.dto";
+import {AddTagToPostDto, UpdatePostDto, UpdatePostResponseDto} from "./dto/update-post.dto";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {AddRoleDto} from "../users/dto/add-role.dto";
 import {AddTagDto} from "../roles/dto/add-tag.dto";
@@ -22,6 +22,7 @@ import {PostsGetAllResponse} from "./responses/posts.getAll-response";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 import {GetPostsStatsResponseDto} from "./dto/get-posts-stats";
+import {Post as PostItem} from './posts.model'
 
 
 @ApiTags('Доступные запросы для Статей блога')
@@ -30,6 +31,8 @@ export class PostsController {
 
     constructor(private postService: PostsService) {}
 
+    @ApiOperation({summary: 'Добавление Статьи'})
+    @ApiResponse({status: 201, type: CreatePostResponseDto})
     @UseGuards(RolesGuard)
     @Roles("AUTHOR")         // Ограничение к эндпоинту, если нет определенноё роли
     @Post()
@@ -53,21 +56,21 @@ export class PostsController {
     }
 
     @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
-    @ApiResponse({status: 200, type: [Post]})
+    @ApiResponse({status: 200, type: PostItem})
     @Get()
     getAllPublished(){
         return this.postService.getAllPublishedPosts();
     }
 
     @ApiOperation({summary: 'Получение всех постов одного пользователя'})
-    @ApiResponse({status: 200, type: [Post]})
+    @ApiResponse({status: 200, type: [PostItem]})
     @Get('/user/:userId')
     getAllUserPosts(@Param ('userId') userId: number ){
         return this.postService.getAllPostsByUserId(userId);
     }
 
     @ApiOperation({summary: 'Получение Одной статьи из БД'})
-    @ApiResponse({status: 200, type: Post})
+    @ApiResponse({status: 200, type: PostItem})
     @Get('/:id')
     getOnePostById(@Param('id') id: number ){
         return this.postService.getPostById(id);
@@ -94,7 +97,7 @@ export class PostsController {
     }
 
     @ApiOperation({summary: 'Выдать тег'})
-    @ApiResponse({status: 200})
+    @ApiResponse({status: 200, type: AddTagToPostDto})
     @Post('/tag')
     addTag(@Body() dto: AddTagDto){
         return this.postService.addTag(dto);

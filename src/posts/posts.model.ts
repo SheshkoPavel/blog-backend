@@ -31,10 +31,11 @@ export class Post extends Model<Post, PostCreationAttributes> {
     @Column({type: DataType.STRING, allowNull: false, defaultValue: 'SAVED'})
     status: string;
 
-    @ApiProperty({example: '', description: 'Изображение к Статье'})
+    @ApiProperty({example: 'fj-ksd-hf-asd.jpg', description: 'Изображение к Статье'})
     @Column({type: DataType.STRING, allowNull: false})
     image: string;
 
+    @ApiProperty({example: '2', description: 'id автора Статьи'})
     @ForeignKey(() => User)
     @Column({type: DataType.INTEGER})
     userId: number;
@@ -42,9 +43,11 @@ export class Post extends Model<Post, PostCreationAttributes> {
     @BelongsTo(() => User)
     author: User;
 
+    @ApiProperty({example: '[...]', description: 'Массив с данными о комментариях к посту'})
     @HasMany(()=> Comment)
     comments: Comment[];
 
+    @ApiProperty({example: '[...]', description: 'Массив с данными о тегах к посту'})
     @BelongsToMany(() => Tag, () => PostTags)
     tags: Tag[];
 }
