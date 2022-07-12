@@ -15,6 +15,10 @@ export class AuthService {
                 private fileService: FilesService) {}
 
     async login(userDto: LoginUserDto) {
+        const candidate = await this.usersService.getUserByEmail(userDto.email);
+        if (!candidate) {
+            throw new HttpException('Такого пользователя не существует', HttpStatus.NOT_FOUND)
+        }
         const user = await this.validateUser(userDto);
         return this.generateToken(user);
     }
