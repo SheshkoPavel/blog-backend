@@ -44,7 +44,7 @@ export class PostsController {
     @ApiOperation({summary: 'Получение всех постов из БД'})
     @ApiResponse({status: 200, type: PostsGetAllResponse})
     @Get('all')
-    getAll( @Query() query: {limit: number, offset: number}){
+    getAll( @Query() query?: {limit: number, page: number}){
         return this.postService.getAllPosts(query);
     }
 

@@ -22,11 +22,22 @@ export class PostsService {
         return post;
     }
 
-    async getAllPosts(query) {
-        const posts = await this.postRepository.findAll({include: {all: true}, order: [["id", "ASC"]],
-            limit: query.limit, offset: query.offset});
-        let totalCount = await this.postRepository.count({col: 'id'});
-        return {posts, totalCount};
+    async getAllPosts(query?) {
+        const totalCount = await this.postRepository.count({col: 'id'});
+        let posts;
+        if (query.limit && query.page) {
+            posts = await this.postRepository.findAll({include: {all: true}, order: [["id", "ASC"]],
+            limit: query.limit, offset: (query.page - 1) * query.limit });
+            return {posts, totalCount};
+        }
+        if (!query.limit && !query.page) {
+            posts = await this.postRepository.findAll({include: {all: true}, order: [["id", "ASC"]]});
+            return {posts, totalCount};
+        }
+        if (!query.limit || !query.page) {
+            throw new HttpException('Не введён лимит или страница', HttpStatus.BAD_REQUEST)
+        }
+
     }
 
     async getAllPublishedPosts() {
