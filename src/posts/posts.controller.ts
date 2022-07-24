@@ -5,7 +5,7 @@ import {
     HttpStatus,
     Param,
     Patch,
-    Post,
+    Post, Query,
     UploadedFile,
     UseGuards,
     UseInterceptors
@@ -44,8 +44,8 @@ export class PostsController {
     @ApiOperation({summary: 'Получение всех постов из БД'})
     @ApiResponse({status: 200, type: PostsGetAllResponse})
     @Get('all')
-    getAll(){
-        return this.postService.getAllPosts();
+    getAll( @Query() query: {limit: number, offset: number}){
+        return this.postService.getAllPosts(query);
     }
 
     @ApiOperation({summary: 'Получение статистики о постах'})
