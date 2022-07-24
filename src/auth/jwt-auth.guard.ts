@@ -19,7 +19,7 @@ export class JwtAuthGuard implements CanActivate {
                 throw new UnauthorizedException({message: 'Пользователь не авторизован. Нет прав доступа!'})
             }
 
-            const user = this.jwtService.verify(token);
+            const user = this.jwtService.verify(token); //Раскодировка токена
             request.user = user;
             return true;     //Если функция возвращает true, то доступ к эндпоинту будет разрешён
 

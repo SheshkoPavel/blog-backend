@@ -33,8 +33,8 @@ export class PostsController {
 
     @ApiOperation({summary: 'Добавление Статьи'})
     @ApiResponse({status: 201, type: CreatePostResponseDto})
+    @Roles("AUTHOR")   // Ограничение к эндпоинту, если нет определенноё роли, можно через запятую указать несколько
     @UseGuards(RolesGuard)
-    @Roles("AUTHOR")         // Ограничение к эндпоинту, если нет определенноё роли
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     createPost(@Body() dto: CreatePostDto, @UploadedFile() image){
