@@ -56,10 +56,10 @@ export class PostsController {
     }
 
     @ApiOperation({summary: 'Получение всех опубликованных постов из БД'})
-    @ApiResponse({status: 200, type: PostItem})
+    @ApiResponse({status: 200, type: PostsGetAllResponse})
     @Get()
-    getAllPublished(){
-        return this.postService.getAllPublishedPosts();
+    getAllPublished( @Query() query?: {limit: number, page: number}){
+        return this.postService.getAllPublishedPosts(query);
     }
 
     @ApiOperation({summary: 'Получение всех постов одного пользователя'})

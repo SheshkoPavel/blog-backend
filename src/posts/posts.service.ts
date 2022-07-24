@@ -40,10 +40,26 @@ export class PostsService {
 
     }
 
-    async getAllPublishedPosts() {
-        const posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
-            include: {all: true}, order: [["createdAt", "DESC"]]});
-        return posts;
+    async getAllPublishedPosts(query?) {
+        const totalCount = await this.postRepository.count({col: 'id'});
+        let posts;
+        if (query.limit && query.page) {
+            posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
+                include: {all: true}, order: [["createdAt", "DESC"]],
+                limit: query.limit, offset: (query.page - 1) * query.limit
+            });
+            return {posts, totalCount};
+        }
+        if (!query.limit && !query.page) {
+            posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
+                include: {all: true}, order: [["createdAt", "DESC"]],
+                limit: 5
+            });
+            return {posts, totalCount};
+        }
+        if (!query.limit || !query.page) {
+            throw new HttpException('Не введён лимит или страница', HttpStatus.BAD_REQUEST)
+        }
     }
 
     async updatePost(dto: UpdatePostDto){
