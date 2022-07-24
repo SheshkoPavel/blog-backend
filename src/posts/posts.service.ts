@@ -41,7 +41,7 @@ export class PostsService {
     }
 
     async getAllPublishedPosts(query?) {
-        const totalCount = await this.postRepository.count({col: 'id'});
+        const totalCount = await this.postRepository.count({col: 'id', where: {status: 'PUBLISHED'}} );
         let posts;
         if (query.limit && query.page) {
             posts = await this.postRepository.findAll({where: {status: 'PUBLISHED'},
