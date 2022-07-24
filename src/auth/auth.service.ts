@@ -20,7 +20,7 @@ export class AuthService {
             throw new HttpException('Такого пользователя не существует', HttpStatus.NOT_FOUND)
         }
         const user = await this.validateUser(userDto);
-        return this.generateToken(user);
+        return this.generateToken(user);  //Если валидация прошла успешно, генерируем JWT токен юзера
     }
 
     async registration(userDto: CreateUserDto, avatar: any) {
@@ -28,23 +28,23 @@ export class AuthService {
         if (!!candidate) {
             throw new HttpException('Пользователь с таким email уже существует', HttpStatus.BAD_REQUEST)
         }
-        const hashPassword = await bcrypt.hash(userDto.password, 5);
+        const hashPassword = await bcrypt.hash(userDto.password, 5); //Хэшируем пароль
         const fileName = await this.fileService.createFileAvatar(avatar);
         const user = await this.usersService.createUser({...userDto, password: hashPassword, avatar: fileName});
         return this.generateToken(user);
     }
 
     private async generateToken(user: User) {
-        const payload = {email: user.email, id: user.id, roles: user.roles, name: user.name, avatar: user.avatar};
+        const payload = {email: user.email, id: user.id, roles: user.roles, name: user.name, avatar: user.avatar}; //Какие поля буду ложить в токен
         return {
-            token: this.jwtService.sign(payload)
+            token: this.jwtService.sign(payload)    //Генерация JWT токена
         }
     }
 
     private async validateUser(userDto: LoginUserDto) {
         const user = await this.usersService.getUserByEmail(userDto.email);
-        const passwordEquales = await bcrypt.compare(userDto.password, user.password);
-        if (!!user && !!passwordEquales) {
+        const passwordEquals = await bcrypt.compare(userDto.password, user.password);  //Сравниваем пароль, который пришёл с клиента с паролем из БД
+        if (!!user && !!passwordEquals) {
             return user;
         }
         throw new UnauthorizedException({message: 'Введён неправильный email или пароль'});
