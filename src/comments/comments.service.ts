@@ -8,8 +8,8 @@ export class CommentsService {
 
     constructor(@InjectModel(Comment) private commentRepository: typeof Comment) { }
 
-    createComment(dto: CreateCommentDto) {
-        const comment = this.commentRepository.create(dto);
+    async createComment(dto: CreateCommentDto) {
+        const comment = await this.commentRepository.create(dto);
         return comment;
     }
 

@@ -4,6 +4,7 @@ import {User} from "../users/users.model";
 import {Comment} from "../comments/comments.model";
 import {Tag} from "../tags/tags.model";
 import {PostTags} from "../tags/post-tag.model";
+import {UserPosts} from "./user-posts.model";
 
 interface PostCreationAttributes {
     title: string;
@@ -40,8 +41,8 @@ export class Post extends Model<Post, PostCreationAttributes> {
     @Column({type: DataType.INTEGER})
     userId: number;
 
-    @BelongsTo(() => User)
-    author: User;
+    @BelongsToMany(() => User, () => UserPosts)
+    author: User[];
 
     @ApiProperty({example: '[...]', description: 'Массив с данными о комментариях к посту'})
     @HasMany(()=> Comment)

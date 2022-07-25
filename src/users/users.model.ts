@@ -3,6 +3,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import {Role} from "../roles/roles.model";
 import {UserRoles} from "../roles/user-roles.model";
 import {Post} from "../posts/posts.model";
+import {UserPosts} from "../posts/user-posts.model";
 
 interface UserCreationAttributes {
     email: string;
@@ -35,6 +36,6 @@ export class User extends Model<User, UserCreationAttributes> {
     @BelongsToMany(() => Role, () => UserRoles)
     roles: Role[];
 
-    @HasMany(()=> Post)
+    @BelongsToMany(()=> Post, () => UserPosts)
     posts: Post[];
 }
