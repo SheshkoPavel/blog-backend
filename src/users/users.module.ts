@@ -10,6 +10,7 @@ import {AuthModule} from "../auth/auth.module";
 import {Post} from "../posts/posts.model";
 import {FilesModule} from "../files/files.module";
 import {UserPosts} from "../posts/user-posts.model";
+import {PostsModule} from "../posts/posts.module";
 
 @Module({
   controllers: [UsersController],
@@ -18,6 +19,7 @@ import {UserPosts} from "../posts/user-posts.model";
       SequelizeModule.forFeature([User, Role, UserRoles, Post, UserPosts]),
       FilesModule,
       RolesModule,
+      PostsModule,
       forwardRef(() => AuthModule)
   ],
     exports: [

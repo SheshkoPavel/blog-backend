@@ -6,7 +6,9 @@ import {FilesService} from "../files/files.service";
 import {UpdatePostDto} from "./dto/update-post.dto";
 import {AddTagDto} from "../roles/dto/add-tag.dto";
 import {TagsService} from "../tags/tags.service";
-import sequelize from "sequelize";
+import sequelize, {Op} from "sequelize";
+
+
 
 
 @Injectable()
@@ -92,7 +94,8 @@ export class PostsService {
     }
 
     async getAllPostsByUserId(userId: number) {
-        const { Op } = require("sequelize");
+        console.log(userId);
+
         const posts = await this.postRepository.findAll({
             where: {
                 userId: userId,
@@ -119,6 +122,18 @@ export class PostsService {
             publishedPostsCount: allPublishedCount,
             savedPostsCount: allSavedCount
         }
-
     }
+
+/*    async getPostsByManyAuthors(userId: number) {
+        const posts = await this.postRepository.findAll({
+            where: {
+                author: {id: userId},
+                [Op.or]: [
+                    { status: 'PUBLISHED' },
+                    { status: 'SAVED' }
+                ],
+            },
+        });
+        return posts;
+    }*/
 }

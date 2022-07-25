@@ -17,6 +17,7 @@ import {Comment} from "./comments/comments.model";
 import { TagsModule } from './tags/tags.module';
 import {Tag} from "./tags/tags.model";
 import {PostTags} from "./tags/post-tag.model";
+import {UserPosts} from "./posts/user-posts.model";
 
 @Module({
     controllers: [],
@@ -35,7 +36,7 @@ import {PostTags} from "./tags/post-tag.model";
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Post, Comment, Tag, PostTags],
+            models: [User, Role, UserRoles, Post, Comment, Tag, PostTags, UserPosts],
             autoLoadModels: true
         }),
         UsersModule,

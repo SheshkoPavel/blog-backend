@@ -33,9 +33,11 @@ export class User extends Model<User, UserCreationAttributes> {
     @Column({type: DataType.STRING, allowNull: false})
     avatar: string;
 
+    @ApiProperty({example: '[...]', description: 'Массив с данными о ролях пользователя'})
     @BelongsToMany(() => Role, () => UserRoles)
     roles: Role[];
 
+    @ApiProperty({example: '[...]', description: 'Массив с данными о постах пользователя'})
     @BelongsToMany(()=> Post, () => UserPosts)
     posts: Post[];
 }

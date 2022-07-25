@@ -20,6 +20,9 @@ import {UserPosts} from "./user-posts.model";
     FilesModule,
     TagsModule,
     forwardRef(() => AuthModule)
+  ],
+  exports: [
+      PostsService
   ]
 })
 export class PostsModule {}

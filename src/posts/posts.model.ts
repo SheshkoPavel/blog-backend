@@ -41,6 +41,9 @@ export class Post extends Model<Post, PostCreationAttributes> {
     @Column({type: DataType.INTEGER})
     userId: number;
 
+
+    //todo Change field name after Data Base delete
+    @ApiProperty({example: '[...]', description: 'Массив с данными о пользователях к посту'})
     @BelongsToMany(() => User, () => UserPosts)
     author: User[];
 

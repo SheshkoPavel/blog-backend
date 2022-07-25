@@ -4,12 +4,16 @@ import {InjectModel} from "@nestjs/sequelize";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {RolesService} from "../roles/roles.service";
 import {AddRoleDto} from "./dto/add-role.dto";
+import {AddPostDto} from "./dto/add-post.dto";
+import {PostsService} from "../posts/posts.service";
+import sequelize, {Op} from "sequelize";
 
 @Injectable()
 export class UsersService {
 
     constructor(@InjectModel(User) private userRepository: typeof User,
-                private rolesService: RolesService
+                private rolesService: RolesService,
+                private postsService: PostsService
                 ) {  }
 
     async createUser(dto: CreateUserDto) {
@@ -34,6 +38,17 @@ export class UsersService {
         return user;
     }
 
+    async getUserByName(email: string) {
+        const user = await this.userRepository.findOne({
+            where: {
+                email : {
+                    [Op.eq] : email
+                }
+            }
+        });
+        return user;
+    }
+
     async addRole (dto: AddRoleDto) {
         const user = await this.userRepository.findByPk(dto.userId);
         const role = await this.rolesService.getRoleByValue(dto.value);
@@ -42,6 +57,17 @@ export class UsersService {
             return dto;
         }
         throw new HttpException('Пользователь, или роль не найдены', HttpStatus.NOT_FOUND);
-
     }
+
+    async addPost (dto: AddPostDto) {
+        const user = await this.userRepository.findByPk(dto.userId);
+        const post = await this.postsService.getPostById(dto.postId);
+        if (post && user) {
+            await user.$add('post', post.id);
+            return dto;
+        }
+        throw new HttpException('Пользователь, или пост не найден', HttpStatus.NOT_FOUND);
+    }
+
+
 }

@@ -48,6 +48,7 @@ export class PostsController {
         return this.postService.getAllPosts(query);
     }
 
+
     @ApiOperation({summary: 'Получение статистики о постах'})
     @ApiResponse({status: 200, type: GetPostsStatsResponseDto})
     @Get('/stats' )
